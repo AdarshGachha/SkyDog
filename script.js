@@ -6,7 +6,69 @@ var nav = document.querySelector(".nav");
 var cardsreveal = document.querySelectorAll(".cards");
 var tl = gsap.timeline();
 
+function loaderstay(){
 
+  document.addEventListener("readystatechange",function(){
+      function scrollbarhide(){
+          document.body.style.overflow = 'hidden';
+      }
+      scrollbarhide();
+  
+  
+      function disableScroll() {
+      // Get the current page scroll position
+      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    
+          // if any scroll is attempted, set this to the previous value
+          window.onscroll = function() {
+              window.scrollTo(scrollLeft, scrollTop);
+          };
+      }
+  disableScroll();
+      if(document.readyState === "complete"){
+          setTimeout(loaderHide,300);
+          function loaderHide(){ 
+              document.querySelector(".preloader").style.opacity = "0"
+          }
+
+
+          function scrollbarvisible(){
+              document.body.style.overflow = 'visible';
+          }
+          scrollbarvisible();
+  
+          function enableScroll() {
+              window.onscroll = function() {};
+          }
+          enableScroll();
+      }
+      
+  })
+}
+loaderstay();
+function loader(){
+  let progressBar = document.querySelector(".circular-progress");
+let valueContainer = document.querySelector(".value-container");
+
+let progressValue = 0;
+let progressEndValue = 100;
+let speed = 50;
+
+let progress = setInterval(() => {
+  progressValue++;
+  valueContainer.textContent = `${progressValue}%`;
+  progressBar.style.background = `conic-gradient(
+      #3f3f3f ${progressValue * 3.6}deg,
+      #cadcff ${progressValue * 3.6}deg
+  )`;
+  if (progressValue == progressEndValue) {
+    clearInterval(progress);
+  }
+}, speed);
+
+}
+loader(); 
 
 function loco(){
     gsap.registerPlugin(ScrollTrigger);
